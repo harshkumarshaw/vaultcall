@@ -148,6 +148,11 @@ class VoicemailRecorderService : Service() {
             if (callId != null && inCallService != null) {
                 inCallService.answerCall(callId)
                 delay(1000) // Wait for connection
+                
+                // CRITICAL ROUTING: Turn on speaker so the caller's voice comes out loud
+                // and can be recorded by the microphone.
+                inCallService.setSpeakerphone(true)
+                delay(500)
             }
 
             // Play greeting
@@ -185,6 +190,11 @@ class VoicemailRecorderService : Service() {
 
             // Stop recording
             stopRecording()
+            
+            // Turn off speakerphone safely
+            try {
+                inCallService?.setSpeakerphone(false)
+            } catch (_: Exception) {}
 
             // Hang up
             if (callId != null && inCallService != null) {
@@ -253,7 +263,9 @@ class VoicemailRecorderService : Service() {
     private fun startRecording(outputFile: File) {
         try {
             mediaRecorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION)
+                // Use MIC instead of VOICE_COMMUNICATION to bypass VoIP echo-cancellation
+                // which would otherwise filter out the speakerphone audio.
+                setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setAudioSamplingRate(16000)

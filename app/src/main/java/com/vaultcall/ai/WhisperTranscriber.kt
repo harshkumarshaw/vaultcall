@@ -61,7 +61,7 @@ class WhisperTranscriber @Inject constructor(
         }
 
         val session = ortSession ?: return@withContext TranscriptionResult(
-            text = "",
+            text = "(AI Model Missing: Audio saved safely. Play to listen.)",
             language = "en",
             confidence = 0.0f
         )
@@ -106,7 +106,7 @@ class WhisperTranscriber @Inject constructor(
 
         } catch (e: Exception) {
             TranscriptionResult(
-                text = "",
+                text = "(Transcription failed: Audio saved safely. Play to listen.)",
                 language = "en",
                 confidence = 0.0f
             )

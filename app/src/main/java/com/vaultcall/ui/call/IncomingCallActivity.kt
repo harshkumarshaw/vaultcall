@@ -7,7 +7,9 @@ import android.os.Build
 import android.os.Bundle
 import android.telecom.Call
 import android.view.WindowManager
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.vaultcall.service.CallStateManager
