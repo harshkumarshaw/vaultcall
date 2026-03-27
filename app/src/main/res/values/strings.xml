@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Info -->
+    <string name="app_name">VaultCall</string>
+    <string name="app_tagline">Privacy-first smart voicemail</string>
+
+    <!-- Screen Titles -->
+    <string name="title_voicemails">Voicemails</string>
+    <string name="title_dialer">Dialer</string>
+    <string name="title_recents">Recents</string>
+    <string name="title_contacts">Contacts</string>
+    <string name="title_rules">Rules</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_onboarding">Welcome</string>
+    <string name="title_greeting_setup">Greetings</string>
+    <string name="title_privacy_report">Privacy Report</string>
+    <string name="title_active_call">Active Call</string>
+    <string name="title_voicemail_detail">Voicemail Detail</string>
+    <string name="title_rule_editor">Edit Rule</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to VaultCall</string>
+    <string name="onboarding_welcome_subtitle">Your privacy-first smart voicemail and call management app. All data stays on your device — always.</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_permissions_title">Permissions</string>
+    <string name="onboarding_permissions_subtitle">VaultCall needs a few permissions to manage calls and record voicemails. Each permission is used solely on your device.</string>
+    <string name="onboarding_default_dialer_title">Default Dialer</string>
+    <string name="onboarding_default_dialer_subtitle">VaultCall needs to be your default dialer to screen calls and record voicemails.</string>
+    <string name="onboarding_set_default_dialer">Set as Default Dialer</string>
+    <string name="onboarding_done_title">You\'re All Set!</string>
+    <string name="onboarding_done_subtitle">VaultCall is ready. Incoming calls will be screened based on your rules.</string>
+    <string name="onboarding_go_to_app">Go to VaultCall</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+
+    <!-- Permissions -->
+    <string name="permission_phone">Phone</string>
+    <string name="permission_phone_desc">Answer, screen, and manage phone calls</string>
+    <string name="permission_microphone">Microphone</string>
+    <string name="permission_microphone_desc">Record voicemail messages from callers</string>
+    <string name="permission_contacts">Contacts</string>
+    <string name="permission_contacts_desc">Show caller names in voicemail inbox</string>
+    <string name="permission_calendar">Calendar</string>
+    <string name="permission_calendar_desc">Auto-screen calls during busy calendar events</string>
+    <string name="permission_sms">SMS</string>
+    <string name="permission_sms_desc">Send auto-reply messages to screened callers</string>
+    <string name="permission_notifications">Notifications</string>
+    <string name="permission_notifications_desc">Alert you about new voicemails and screened calls</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_grant">Grant</string>
+
+    <!-- Buttons -->
+    <string name="btn_call_back">Call Back</string>
+    <string name="btn_reply_sms">Reply</string>
+    <string name="btn_share">Share</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_archive">Archive</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_add_rule">Add Rule</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_preview">Preview</string>
+    <string name="btn_record">Record</string>
+    <string name="btn_stop">Stop</string>
+    <string name="btn_play">Play</string>
+    <string name="btn_pause">Pause</string>
+    <string name="btn_save_note">Save Note</string>
+    <string name="btn_skip_note">Skip</string>
+    <string name="btn_wipe_all">Wipe All Data</string>
+    <string name="btn_export_data">Export Data</string>
+
+    <!-- Voicemail -->
+    <string name="voicemail_unread_count">%d unread</string>
+    <string name="voicemail_empty_title">No voicemails yet</string>
+    <string name="voicemail_empty_subtitle">Calls will be recorded here when screened by your rules.</string>
+    <string name="voicemail_screened_by">Screened (%s rule)</string>
+    <string name="voicemail_transcript_label">TRANSCRIPT</string>
+    <string name="voicemail_keywords_label">KEYWORDS DETECTED</string>
+    <string name="voicemail_transcribing">Transcribing…</string>
+    <string name="voicemail_no_transcript">No transcript available</string>
+
+    <!-- Call Screening -->
+    <string name="screening_notification_title">Call Screened</string>
+    <string name="screening_notification_text">Call screened from %s</string>
+    <string name="screening_foreground_title">Screening call</string>
+    <string name="screening_foreground_text">Screening call from %s</string>
+
+    <!-- Rules -->
+    <string name="rules_empty_title">No rules yet</string>
+    <string name="rules_empty_subtitle">Add your first rule to start screening calls.</string>
+    <string name="rule_type_night_hours">Night Hours</string>
+    <string name="rule_type_dnd">Do Not Disturb</string>
+    <string name="rule_type_calendar">Calendar</string>
+    <string name="rule_type_custom">Custom Schedule</string>
+    <string name="rule_action_voicemail">Send to Voicemail</string>
+    <string name="rule_action_sms">Auto-Reply SMS</string>
+    <string name="rule_action_alert">Alert Me</string>
+    <string name="rule_action_reject">Reject Call</string>
+    <string name="rule_template_night">🌙 Night Mode</string>
+    <string name="rule_template_night_desc">Screen calls 10 PM – 7 AM, send to voicemail</string>
+    <string name="rule_template_meeting">📅 Meeting Mode</string>
+    <string name="rule_template_meeting_desc">Screen calls during calendar events</string>
+    <string name="rule_template_dnd">🤫 DND Mode</string>
+    <string name="rule_template_dnd_desc">Screen calls when Do Not Disturb is on</string>
+    <string name="rule_sms_hint">Available variables: {caller_name}, {time}, {app_name}</string>
+    <string name="rule_sms_default">I\'m unavailable right now. I\'ll call you back soon.</string>
+
+    <!-- Greeting -->
+    <string name="greeting_default">This call is being screened. Please state your name and the reason for your call after the tone.</string>
+    <string name="greeting_dnd">The person you are calling is currently unavailable. Please leave a message after the tone.</string>
+    <string name="greeting_night">The person you are calling is sleeping. Please leave a message and they will call you back.</string>
+    <string name="greeting_meeting">The person you are calling is in a meeting. Please leave a message.</string>
+    <string name="greeting_default_label">Default Greeting</string>
+    <string name="greeting_dnd_label">DND Greeting</string>
+    <string name="greeting_night_label">Night Mode Greeting</string>
+    <string name="greeting_meeting_label">Meeting Greeting</string>
+    <string name="greeting_using_default">Using default</string>
+    <string name="greeting_custom_recorded">Custom recorded</string>
+    <string name="greeting_customize">Customize</string>
+    <string name="greeting_tab_tts">Text-to-Speech</string>
+    <string name="greeting_tab_record">Record</string>
+
+    <!-- Dialer -->
+    <string name="dialer_quick_dial">Quick Dial</string>
+    <string name="dialer_call">Call</string>
+    <string name="dialer_add_contact">Add</string>
+    <string name="call_note_title">Add note for %s</string>
+    <string name="call_note_hint">Type a note about this call…</string>
+
+    <!-- Active Call -->
+    <string name="call_mute">Mute</string>
+    <string name="call_keypad">Keypad</string>
+    <string name="call_speaker">Speaker</string>
+    <string name="call_hold">Hold</string>
+    <string name="call_add">Add Call</string>
+    <string name="call_swap">Swap</string>
+    <string name="call_end">End Call</string>
+    <string name="call_incoming">Incoming Call</string>
+    <string name="call_outgoing">Calling…</string>
+    <string name="call_connecting">Connecting…</string>
+    <string name="call_on_hold">On Hold</string>
+
+    <!-- Recents -->
+    <string name="recents_today">Today</string>
+    <string name="recents_yesterday">Yesterday</string>
+    <string name="recents_this_week">This Week</string>
+    <string name="recents_empty_title">No recent calls</string>
+    <string name="recents_empty_subtitle">Your call history will appear here.</string>
+
+    <!-- Settings -->
+    <string name="settings_security">Account &amp; Security</string>
+    <string name="settings_app_lock">App Lock</string>
+    <string name="settings_auto_lock_timer">Auto-lock Timer</string>
+    <string name="settings_voicemail">Voicemail Settings</string>
+    <string name="settings_max_recording">Max Recording Length</string>
+    <string name="settings_auto_delete">Auto-delete Voicemails After</string>
+    <string name="settings_auto_transcribe">Auto-transcribe</string>
+    <string name="settings_greetings">Greetings</string>
+    <string name="settings_manage_greetings">Manage Greetings</string>
+    <string name="settings_call_screening">Call Screening</string>
+    <string name="settings_screening_enabled">Screening Enabled</string>
+    <string name="settings_rings_before_vm">Rings Before Voicemail</string>
+    <string name="settings_dialer">Dialer</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_accent_color">Accent Color</string>
+    <string name="settings_haptic">Haptic Feedback</string>
+    <string name="settings_dtmf">DTMF Tones</string>
+    <string name="settings_quick_dial">Show Quick Dial</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_report">View Privacy Report</string>
+    <string name="settings_export">Export All Data</string>
+    <string name="settings_wipe">Wipe All Data</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version</string>
+
+    <!-- Privacy Report -->
+    <string name="privacy_total_voicemails">Total Voicemails</string>
+    <string name="privacy_total_transcripts">Total Transcripts</string>
+    <string name="privacy_storage_used">Storage Used</string>
+    <string name="privacy_oldest_voicemail">Oldest Voicemail</string>
+    <string name="privacy_rules_configured">Rules Configured</string>
+    <string name="privacy_call_log_entries">Call Log Entries</string>
+    <string name="privacy_footer">All data stays on device. Zero analytics. Zero cloud dependency.</string>
+
+    <!-- Biometric -->
+    <string name="biometric_title">VaultCall — Verify Identity</string>
+    <string name="biometric_subtitle">Authenticate to access VaultCall</string>
+    <string name="biometric_negative">Use PIN</string>
+
+    <!-- Errors -->
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_recording_failed">Recording failed. Please check microphone permissions.</string>
+    <string name="error_playback_failed">Playback failed. The voicemail may be corrupted.</string>
+    <string name="error_transcription_failed">Transcription failed. Will retry later.</string>
+    <string name="error_encryption_failed">Encryption error. Please restart the app.</string>
+    <string name="error_permission_denied">Permission denied. Some features may not work.</string>
+    <string name="error_not_default_dialer">VaultCall must be the default dialer for call screening.</string>
+    <string name="error_sms_failed">SMS auto-reply failed.</string>
+    <string name="error_no_biometric">Biometric authentication not available on this device.</string>
+
+    <!-- Notification Channels -->
+    <string name="channel_screened_name">Screened Calls</string>
+    <string name="channel_screened_desc">Notifications for calls that were automatically screened</string>
+    <string name="channel_voicemail_name">New Voicemails</string>
+    <string name="channel_voicemail_desc">Notifications for new voicemail recordings</string>
+    <string name="channel_foreground_name">Call Screening Service</string>
+    <string name="channel_foreground_desc">Shown while a call is being screened</string>
+    <string name="channel_missed_name">Missed Calls</string>
+    <string name="channel_missed_desc">Notifications for missed calls</string>
+
+    <!-- Wipe Confirmation -->
+    <string name="wipe_dialog_title">Wipe All Data?</string>
+    <string name="wipe_dialog_message">This will permanently delete all voicemails, transcripts, rules, and call logs. This action cannot be undone.</string>
+
+    <!-- Spam -->
+    <string name="spam_badge">Suspected Spam</string>
+    <string name="spam_report">Report as Spam</string>
+    <string name="spam_unmark">Not Spam</string>
+
+    <!-- Filter Chips -->
+    <string name="filter_all">All</string>
+    <string name="filter_unread">Unread</string>
+    <string name="filter_screened">Screened</string>
+    <string name="filter_archived">Archived</string>
+
+    <!-- Misc -->
+    <string name="unknown_caller">Unknown</string>
+    <string name="view_voicemail">View Voicemail</string>
+    <string name="search_hint">Search voicemails…</string>
+    <string name="speed_label">Playback Speed</string>
+</resources>
