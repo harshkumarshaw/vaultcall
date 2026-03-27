@@ -72,6 +72,12 @@
                 <action android:name="android.intent.action.CALL_BUTTON" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!-- Native outgoing call routing -->
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tel" />
+            </intent-filter>
         </activity>
 
         <!-- Incoming call UI — shown on lock screen when a call arrives -->

@@ -8,10 +8,14 @@ import com.vaultcall.data.model.CallType
 import com.vaultcall.data.repository.CallLogRepository
 import com.vaultcall.ui.call.ActiveCallActivity
 import com.vaultcall.ui.call.IncomingCallActivity
+import com.vaultcall.data.repository.SettingsRepository
+import android.content.Intent
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +31,7 @@ class MyInCallService : InCallService() {
 
     @Inject lateinit var callStateManager: CallStateManager
     @Inject lateinit var callLogRepository: CallLogRepository
+    @Inject lateinit var settingsRepository: SettingsRepository
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val calls = mutableMapOf<String, Call>()
@@ -61,6 +66,40 @@ class MyInCallService : InCallService() {
                 phoneNumber = phoneNumber,
                 callerName = null
             )
+
+            // Start auto-answer timer based on user settings
+            val rings = settingsRepository.ringsBeforeVoicemail.value
+            if (rings > 0) {
+                val timeoutMs = rings * 4000L // 4 seconds per ring
+                serviceScope.launch {
+                    delay(timeoutMs)
+                    val currentCall = calls[callId]
+                    // If still ringing after timeout, auto-answer for Voicemail
+                    if (currentCall != null && currentCall.state == Call.STATE_RINGING) {
+                        currentCall.answer(0)
+
+                        // Start the service
+                        val startIntent = Intent(this@MyInCallService, VoicemailRecorderService::class.java)
+                        try {
+                            ContextCompat.startForegroundService(this@MyInCallService, startIntent)
+                        } catch (e: Exception) {
+                            // Suppress
+                        }
+
+                        // Broadcast the call info to the service
+                        val broadcastIntent = Intent(VoicemailRecorderService.ACTION_SCREEN_CALL).apply {
+                            putExtra("phone_number", phoneNumber)
+                            putExtra("rule_id", -1L)
+                            putExtra("rule_action", "VOICEMAIL_ONLY")
+                            putExtra("rule_name", "Auto Missed Call")
+                            putExtra("sms_template", "")
+                            putExtra("greeting_id", "default")
+                        }
+                        sendBroadcast(broadcastIntent)
+                    }
+                }
+            }
+
         } else {
             // Outgoing call — go straight to active call screen
             ActiveCallActivity.launch(

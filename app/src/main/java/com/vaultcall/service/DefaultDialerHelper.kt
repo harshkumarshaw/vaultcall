@@ -83,23 +83,17 @@ object DefaultDialerHelper {
      */
     fun makeCall(context: Context, phoneNumber: String, simSlot: Int = 0) {
         try {
-            val telecom = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-            val uri = Uri.parse("tel:$phoneNumber")
-            val bundle = Bundle().apply {
+            val intent = Intent(Intent.ACTION_CALL).apply {
+                data = Uri.parse("tel:$phoneNumber")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 if (simSlot > 0) {
-                    putInt("com.android.phone.extra.SLOT_ID", simSlot)
+                    putExtra("com.android.phone.extra.SLOT_ID", simSlot)
                 }
             }
-            telecom.placeCall(uri, bundle)
-        } catch (e: SecurityException) {
-            // Fallback: use ACTION_DIAL which doesn't require permission
-            try {
-                val intent = Intent(Intent.ACTION_DIAL).apply {
-                    data = Uri.parse("tel:$phoneNumber")
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                context.startActivity(intent)
-            } catch (_: Exception) { }
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            // Permission not granted or intent resolution failed.
+            // The permissions should be checked by the UI before invoking this.
         }
     }
 }

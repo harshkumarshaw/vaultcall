@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased] - Current Iteration (Iteration 4)
 
+### Fixed
+* **Dialer Rework (ACTION_CALL Routing):** Completely deprecated `TelecomManager.placeCall` which was triggering an infinite intent loop bug and getting blocked by OEMs. Outgoing calls now route robustly via Android's native `Intent.ACTION_CALL` resolver straight into `MyInCallService`.
+
+### Added
+* **Dialer Auto-Complete:** Integrated `ContactsContract` queries into the Dialer T9 keypad. As you type a number, matching contacts instantly appear in a horizontal row above the dialpad.
+* **Call Log Cards & Quick Dial:** Call Log entries now open a detailed "Contact Card" BottomSheet on tap, and the Quick Call buttons natively trigger `ACTION_CALL`.
+* **Missed Call Auto-Voicemail:** VaultCall now acts as a true answering machine. If a call rings longer than your "Rings before voicemail" setting, VaultCall programmatically answers the call and intercepts it to the local `VoicemailRecorderService` before carrier cloud-voicemail takes over!
+
 ### Added
 * **Settings Selection Dialogs:** Fully interactive pop-ups for all numeric configuration values (Auto-lock timer, Max Recording length, Rings before voicemail) saving directly to persistent SharedPreferences.
 * **Privacy Controls:** Implemented a full data reset "Wipe All Data" action that scrubs SharedPreferences safely.

@@ -37,6 +37,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.filled.Person
+import com.vaultcall.service.DefaultDialerHelper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -92,6 +98,7 @@ fun RecentsScreen() {
     val context = LocalContext.current
     val allCalls = remember { mutableStateListOf<SystemCallLogEntry>() }
     var selectedFilter by remember { mutableStateOf(CallFilter.ALL) }
+    var selectedEntry by remember { mutableStateOf<SystemCallLogEntry?>(null) }
     var hasPermission by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(
@@ -240,21 +247,37 @@ fun RecentsScreen() {
                         )
                     }
                     items(calls, key = { it.id }) { entry ->
-                        CallLogItem(entry = entry)
+                        CallLogItem(
+                            entry = entry,
+                            onClick = { selectedEntry = entry }
+                        )
                     }
                 }
+            }
+        }
+
+        if (selectedEntry != null) {
+            ModalBottomSheet(
+                onDismissRequest = { selectedEntry = null },
+                containerColor = MaterialTheme.colorScheme.surface
+            ) {
+                ContactDetailsSheet(
+                    entry = selectedEntry!!,
+                    onCall = { DefaultDialerHelper.makeCall(context, it) },
+                    onClose = { selectedEntry = null }
+                )
             }
         }
     }
 }
 
 @Composable
-private fun CallLogItem(entry: SystemCallLogEntry) {
+private fun CallLogItem(entry: SystemCallLogEntry, onClick: () -> Unit) {
     val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Navigate to detail or call back */ }
+            .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -330,10 +353,7 @@ private fun CallLogItem(entry: SystemCallLogEntry) {
         IconButton(
             onClick = {
                 if (entry.number.isNotEmpty()) {
-                    val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
-                        data = android.net.Uri.parse("tel:${entry.number}")
-                    }
-                    context.startActivity(intent)
+                    DefaultDialerHelper.makeCall(context, entry.number)
                 }
             }
         ) {
@@ -451,5 +471,69 @@ private fun formatDuration(seconds: Long): String {
         seconds < 60 -> "${seconds}s"
         seconds < 3600 -> "${seconds / 60}m ${seconds % 60}s"
         else -> "${seconds / 3600}h ${(seconds % 3600) / 60}m"
+    }
+}
+
+@Composable
+private fun ContactDetailsSheet(
+    entry: SystemCallLogEntry,
+    onCall: (String) -> Unit,
+    onClose: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .size(72.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primaryContainer),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.size(36.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = entry.name ?: "Unknown Caller",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = entry.number,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(
+                onClick = {
+                    onCall(entry.number)
+                    onClose()
+                },
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+            ) {
+                Icon(Icons.Default.Call, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Call Back")
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
