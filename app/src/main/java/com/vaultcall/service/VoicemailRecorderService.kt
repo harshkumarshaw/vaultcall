@@ -141,9 +141,6 @@ class VoicemailRecorderService : Service() {
 
             val inCallService = MyInCallService.instance
             if (inCallService != null) {
-                // Securely lock the UI so ActiveCallActivity doesn't bounce in
-                inCallService.markAsAutoAnswered(callId)
-                
                 // Aggressively answer the call immediately! Fixes the 10-second deadlock ring
                 inCallService.answerCall(callId)
 

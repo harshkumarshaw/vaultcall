@@ -135,13 +135,7 @@ class MyInCallService : InCallService() {
                         notificationHelper.cancelNotification(NotificationHelper.NOTIFICATION_INCOMING_CALL)
                         if (!isIncoming) return
 
-                        // If the call was auto-answered for voicemail, DO NOT launch the ActiveCall UI
-                        if (autoAnsweredCalls.contains(callId)) {
-                            // DO NOT remove from registry here, as Android Telecom may fire STATE_ACTIVE redundantly
-                            return
-                        }
-
-                        // If answered externally (e.g. Bluetooth) or by user, show active screen
+                        // If answered externally (e.g. Bluetooth), by user, or by Voicemail, show active screen
                         ActiveCallActivity.launch(
                             context = this@MyInCallService,
                             callId = callId,
