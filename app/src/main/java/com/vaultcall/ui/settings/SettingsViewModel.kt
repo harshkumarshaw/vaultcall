@@ -17,6 +17,11 @@ class SettingsViewModel @Inject constructor(
     val hapticEnabled: StateFlow<Boolean> = settingsRepository.hapticEnabled
     val dtmfEnabled: StateFlow<Boolean> = settingsRepository.dtmfEnabled
 
+    val autoLockTimerMinutes: StateFlow<Int> = settingsRepository.autoLockTimerMinutes
+    val maxRecordingLengthSeconds: StateFlow<Int> = settingsRepository.maxRecordingLengthSeconds
+    val autoDeleteDays: StateFlow<Int> = settingsRepository.autoDeleteDays
+    val ringsBeforeVoicemail: StateFlow<Int> = settingsRepository.ringsBeforeVoicemail
+
     fun setAppLockEnabled(enabled: Boolean) {
         settingsRepository.setAppLockEnabled(enabled)
     }
@@ -35,5 +40,21 @@ class SettingsViewModel @Inject constructor(
 
     fun setDtmfEnabled(enabled: Boolean) {
         settingsRepository.setDtmfEnabled(enabled)
+    }
+
+    fun setAutoLockTimerMinutes(minutes: Int) {
+        settingsRepository.setAutoLockTimerMinutes(minutes)
+    }
+
+    fun setMaxRecordingLengthSeconds(seconds: Int) {
+        settingsRepository.setMaxRecordingLengthSeconds(seconds)
+    }
+
+    fun setAutoDeleteDays(days: Int) {
+        settingsRepository.setAutoDeleteDays(days)
+    }
+
+    fun setRingsBeforeVoicemail(rings: Int) {
+        settingsRepository.setRingsBeforeVoicemail(rings)
     }
 }

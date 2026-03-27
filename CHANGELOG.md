@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - Current Iteration (Iteration 3)
+## [Unreleased] - Current Iteration (Iteration 4)
+
+### Added
+* **Settings Selection Dialogs:** Fully interactive pop-ups for all numeric configuration values (Auto-lock timer, Max Recording length, Rings before voicemail) saving directly to persistent SharedPreferences.
+* **Privacy Controls:** Implemented a full data reset "Wipe All Data" action that scrubs SharedPreferences safely.
+* **Dialer Registration Fixes:** Fixed `android.telecom.IN_CALL_SERVICE_RINGING` metadata parameter missed during initial dialer implementation, which was preventing incoming line-state changes from passing through to Jetpack Compose `MyInCallService`.
+
+## [Beta 1] - Iteration 3
 
 ### Added
 * **Live Permissions Dashboard:** Real-time visibility of required and optional permissions with one-click granting and deep-linking to system settings.

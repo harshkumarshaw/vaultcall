@@ -31,6 +31,19 @@ class SettingsRepository @Inject constructor(
     private val _dtmfEnabled = MutableStateFlow(prefs.getBoolean(KEY_DTMF, true))
     val dtmfEnabled: StateFlow<Boolean> = _dtmfEnabled.asStateFlow()
 
+    // Advanced configurable numbers
+    private val _autoLockTimerMinutes = MutableStateFlow(prefs.getInt(KEY_AUTO_LOCK_TIMER, 5))
+    val autoLockTimerMinutes: StateFlow<Int> = _autoLockTimerMinutes.asStateFlow()
+
+    private val _maxRecordingLengthSeconds = MutableStateFlow(prefs.getInt(KEY_MAX_RECORDING_LENGTH, 60))
+    val maxRecordingLengthSeconds: StateFlow<Int> = _maxRecordingLengthSeconds.asStateFlow()
+
+    private val _autoDeleteDays = MutableStateFlow(prefs.getInt(KEY_AUTO_DELETE_DAYS, 30))
+    val autoDeleteDays: StateFlow<Int> = _autoDeleteDays.asStateFlow()
+
+    private val _ringsBeforeVoicemail = MutableStateFlow(prefs.getInt(KEY_RINGS_BEFORE_VOICEMAIL, 4))
+    val ringsBeforeVoicemail: StateFlow<Int> = _ringsBeforeVoicemail.asStateFlow()
+
     fun setAppLockEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_APP_LOCK, enabled).apply()
         _appLockEnabled.value = enabled
@@ -56,6 +69,26 @@ class SettingsRepository @Inject constructor(
         _dtmfEnabled.value = enabled
     }
 
+    fun setAutoLockTimerMinutes(minutes: Int) {
+        prefs.edit().putInt(KEY_AUTO_LOCK_TIMER, minutes).apply()
+        _autoLockTimerMinutes.value = minutes
+    }
+
+    fun setMaxRecordingLengthSeconds(seconds: Int) {
+        prefs.edit().putInt(KEY_MAX_RECORDING_LENGTH, seconds).apply()
+        _maxRecordingLengthSeconds.value = seconds
+    }
+
+    fun setAutoDeleteDays(days: Int) {
+        prefs.edit().putInt(KEY_AUTO_DELETE_DAYS, days).apply()
+        _autoDeleteDays.value = days
+    }
+
+    fun setRingsBeforeVoicemail(rings: Int) {
+        prefs.edit().putInt(KEY_RINGS_BEFORE_VOICEMAIL, rings).apply()
+        _ringsBeforeVoicemail.value = rings
+    }
+
     val currentAppLockEnabled: Boolean
         get() = prefs.getBoolean(KEY_APP_LOCK, false)
 
@@ -65,5 +98,9 @@ class SettingsRepository @Inject constructor(
         const val KEY_SCREENING_ENABLED = "screening_enabled"
         const val KEY_HAPTIC = "haptic_enabled"
         const val KEY_DTMF = "dtmf_enabled"
+        const val KEY_AUTO_LOCK_TIMER = "auto_lock_timer"
+        const val KEY_MAX_RECORDING_LENGTH = "max_recording_length"
+        const val KEY_AUTO_DELETE_DAYS = "auto_delete_days"
+        const val KEY_RINGS_BEFORE_VOICEMAIL = "rings_before_voicemail"
     }
 }
