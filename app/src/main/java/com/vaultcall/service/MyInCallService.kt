@@ -126,15 +126,7 @@ class MyInCallService : InCallService() {
             override fun onStateChanged(call: Call, state: Int) {
                 super.onStateChanged(call, state)
                 callStateManager.updateCallState(callId, mapCallState(state))
-
-                // Dual-SIM auto-resolution: If the OS pauses the call to ask which SIM to use,
-                // automatically select the default one to bypass the foreground prompt hang.
-                if (state == Call.STATE_SELECT_PHONE_ACCOUNT) {
-                    val accounts = call.details.intentExtras?.getParcelableArrayList<android.telecom.PhoneAccountHandle>(android.telecom.Call.AVAILABLE_PHONE_ACCOUNTS)
-                    if (!accounts.isNullOrEmpty()) {
-                        call.phoneAccountSelected(accounts[0], false)
-                    }
-                }
+                handleDualSimSelection(call, state)
 
                 when (state) {
                     Call.STATE_ACTIVE -> {
@@ -167,6 +159,26 @@ class MyInCallService : InCallService() {
 
         callCallbacks[callId] = callback
         call.registerCallback(callback)
+
+        // Evaluate the initial state immediately, as onStateChanged won't fire for the starting state
+        handleDualSimSelection(call, call.state)
+    }
+
+    private fun handleDualSimSelection(call: Call, state: Int) {
+        if (state == Call.STATE_SELECT_PHONE_ACCOUNT) {
+            val telecomManager = getSystemService(android.content.Context.TELECOM_SERVICE) as android.telecom.TelecomManager
+            var accounts = call.details.intentExtras?.getParcelableArrayList<android.telecom.PhoneAccountHandle>(android.telecom.Call.AVAILABLE_PHONE_ACCOUNTS)
+            
+            if (accounts == null || accounts.isEmpty()) {
+                @Suppress("DEPRECATION", "MissingPermission")
+                accounts = ArrayList(telecomManager.callCapablePhoneAccounts)
+            }
+
+            if (!accounts.isNullOrEmpty()) {
+                // Auto-select the first available SIM to bypass the prompt and immediately route the call
+                call.phoneAccountSelected(accounts[0], false)
+            }
+        }
     }
 
     override fun onCallRemoved(call: Call) {

@@ -101,6 +101,16 @@ object DefaultDialerHelper {
             telecom.placeCall(uri, bundle)
         } catch (e: Exception) {
             // Permission missing or invalid phone account
+            android.widget.Toast.makeText(context, "Call Failed: ${e.message}", android.widget.Toast.LENGTH_LONG).show()
+            android.util.Log.e("VaultCall", "placeCall failed", e)
+            
+            // Fallback: Try placing the call without explicit PhoneAccount constraints
+            try {
+                val telecom = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+                telecom.placeCall(Uri.parse("tel:$phoneNumber"), Bundle())
+            } catch (fallbackEx: Exception) {
+                android.widget.Toast.makeText(context, "Fallback Failed: ${fallbackEx.message}", android.widget.Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

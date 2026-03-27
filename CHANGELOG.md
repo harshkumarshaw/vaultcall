@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased] - Current Iteration (Iteration 6)
 
 ### Security & Telecom Hardening (Android 14+)
+* **Dual-SIM Deadlock Resolution:** Diagnosed a core Telecom defect where calls launched on multi-SIM devices without a default account get spawned entirely inside `STATE_SELECT_PHONE_ACCOUNT`. Because traditional event listeners (`Call.Callback.onStateChanged`) only fire upon *subsequent* state changes, the OS SIM-picker popup hung forever. Extracted the evaluator logic to run immediately at `onCallAdded` startup, perfectly resolving "silent failure" outgoing clicks.
 * **STIR/SHAKEN Caller ID Spoofing Defense:** Wired `MyCallScreeningService` to intercept the carrier's `CallDetails.callerNumberVerificationStatus`. VaultCall now instantly rejects verified spoofed robocalls before they attempt to interact with the RulesEngine or Voicemail service.
 * **Full-Screen Intent Notifications:** Converted the background Incoming Call UI launch into a legally compliant `IMPORTANCE_HIGH` Heads-Up Notification equipped with a `FullScreenIntent`. This completely bypasses the Android 10+ background activity blockage.
 * **Modern Audio Routing:** Scrapped legacy `setAudioRoute()` and `setSpeakerphoneOn()` which fail on Android 14. Rewired `MyInCallService.setSpeakerphone()` to explicitly retrieve the `AudioManager.availableCommunicationDevices` and bind `setCommunicationDevice` for bulletproof recording interactions.
