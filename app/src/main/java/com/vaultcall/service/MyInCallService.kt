@@ -105,6 +105,7 @@ class MyInCallService : InCallService() {
 
                         // Broadcast the call info to the service
                         val broadcastIntent = Intent(VoicemailRecorderService.ACTION_SCREEN_CALL).apply {
+                            setPackage(packageName)
                             putExtra("phone_number", phoneNumber)
                             putExtra("rule_id", -1L)
                             putExtra("rule_action", "VOICEMAIL_ONLY")
@@ -141,7 +142,7 @@ class MyInCallService : InCallService() {
 
                         // If the call was auto-answered for voicemail, DO NOT launch the ActiveCall UI
                         if (autoAnsweredCalls.contains(callId)) {
-                            autoAnsweredCalls.remove(callId)
+                            // DO NOT remove from registry here, as Android Telecom may fire STATE_ACTIVE redundantly
                             return
                         }
 
@@ -263,23 +264,10 @@ class MyInCallService : InCallService() {
         setMuted(muted)
     }
 
-    /** Toggle speakerphone depending on API level to adhere to Android 14 regulations. */
+    /** Toggle speakerphone natively through Telecom audio routes to guarantee caller audibility. */
     fun setSpeakerphone(on: Boolean) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            val audioManager = getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
-            if (on) {
-                val speakerDevice = audioManager.availableCommunicationDevices.firstOrNull { 
-                    it.type == android.media.AudioDeviceInfo.TYPE_BUILTIN_SPEAKER 
-                }
-                speakerDevice?.let { audioManager.setCommunicationDevice(it) }
-            } else {
-                audioManager.clearCommunicationDevice()
-            }
-        } else {
-            // Deprecated fallback for Android 11 and below
-            @Suppress("DEPRECATION")
-            setAudioRoute(if (on) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_EARPIECE)
-        }
+        @Suppress("DEPRECATION")
+        setAudioRoute(if (on) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_EARPIECE)
     }
 
     /** End/hang up a call. */
