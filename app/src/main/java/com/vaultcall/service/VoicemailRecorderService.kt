@@ -304,6 +304,12 @@ class VoicemailRecorderService : Service() {
             }
 
             val audioTrack = AudioTrack.Builder()
+                .setAudioAttributes(
+                    android.media.AudioAttributes.Builder()
+                        .setUsage(android.media.AudioAttributes.USAGE_VOICE_COMMUNICATION)
+                        .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
                 .setAudioFormat(
                     AudioFormat.Builder()
                         .setSampleRate(sampleRate)

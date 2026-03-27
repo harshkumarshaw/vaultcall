@@ -30,6 +30,14 @@ class GreetingPlayer @Inject constructor(
             if (status == TextToSpeech.SUCCESS) {
                 isTtsReady = true
                 tts?.language = Locale.getDefault()
+                
+                // CRITICAL: Force TTS to use the Voice Communication stream instead of Media.
+                // Standard Media streams are aggressively muted by Android during active cellular calls.
+                val audioAttributes = android.media.AudioAttributes.Builder()
+                    .setUsage(android.media.AudioAttributes.USAGE_VOICE_COMMUNICATION)
+                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH)
+                    .build()
+                tts?.setAudioAttributes(audioAttributes)
             }
         }
     }

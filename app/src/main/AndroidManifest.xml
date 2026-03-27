@@ -126,7 +126,7 @@
         <!-- VoicemailRecorderService -->
         <service
             android:name=".service.VoicemailRecorderService"
-            android:foregroundServiceType="phoneCall"
+            android:foregroundServiceType="phoneCall|microphone"
             android:exported="false" />
 
         <!-- Boot receiver for re-enabling services -->
