@@ -71,8 +71,10 @@ class MyInCallService : InCallService() {
 
         // ── Launch the appropriate call UI ──
         if (isIncoming) {
-            // Show high-priority ringing notification (wakes up screen on API 10+)
-            notificationHelper.showIncomingCallNotification(
+            // Default Dialers are exempt from Android 10+ Background Activity Restrictions.
+            // Directly launch the full-screen IncomingCallActivity rather than using a fragile Notification.
+            IncomingCallActivity.launch(
+                context = this,
                 callId = callId,
                 phoneNumber = phoneNumber,
                 callerName = null
