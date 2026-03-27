@@ -62,9 +62,8 @@ class MyCallScreeningService : CallScreeningService() {
                 RuleAction.SEND_TO_VOICEMAIL,
                 RuleAction.AUTO_REPLY_SMS,
                 RuleAction.ALERT_USER -> {
-                    // Signal VoicemailRecorderService to handle this call
-                    val intent = Intent("com.vaultcall.SCREEN_CALL").apply {
-                        setPackage(packageName)
+                    // Signal VoicemailRecorderService to handle this call explicitly
+                    val intent = Intent(this, VoicemailRecorderService::class.java).apply {
                         putExtra("phone_number", phoneNumber)
                         putExtra("rule_id", matchedRule.id)
                         putExtra("rule_action", matchedRule.action.name)
@@ -72,7 +71,9 @@ class MyCallScreeningService : CallScreeningService() {
                         putExtra("sms_template", matchedRule.smsReplyTemplate)
                         putExtra("greeting_id", matchedRule.greetingId)
                     }
-                    sendBroadcast(intent)
+                    try {
+                        androidx.core.content.ContextCompat.startForegroundService(this, intent)
+                    } catch (e: Exception) {}
 
                     // Allow call through — VoicemailRecorderService will auto-answer
                     CallResponse.Builder().build()

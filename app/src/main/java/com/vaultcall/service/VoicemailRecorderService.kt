@@ -59,45 +59,34 @@ class VoicemailRecorderService : Service() {
     private var isRecording = false
 
     companion object {
-        const val ACTION_SCREEN_CALL = "com.vaultcall.SCREEN_CALL"
         const val RECORDING_TIMEOUT_MS = 30_000L
         const val MAX_RECORDING_MS = 60_000L
         private const val NOTIFICATION_ID = 1001
         private const val CHANNEL_ID = "screening_service"
     }
 
-    private val screenCallReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == ACTION_SCREEN_CALL) {
-                val phoneNumber = intent.getStringExtra("phone_number") ?: return
-                val ruleId = intent.getLongExtra("rule_id", -1L)
-                val ruleAction = intent.getStringExtra("rule_action") ?: return
-                val ruleName = intent.getStringExtra("rule_name") ?: "Unknown"
-                val smsTemplate = intent.getStringExtra("sms_template") ?: ""
-                val greetingId = intent.getStringExtra("greeting_id")
-
-                serviceScope.launch {
-                    handleScreenedCall(
-                        phoneNumber, ruleId, ruleAction, ruleName, smsTemplate, greetingId
-                    )
-                }
-            }
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
-        registerReceiver(
-            screenCallReceiver,
-            IntentFilter(ACTION_SCREEN_CALL),
-            RECEIVER_NOT_EXPORTED
-        )
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val notification = createForegroundNotification("Screening service active")
         startForeground(NOTIFICATION_ID, notification)
+
+        if (intent != null && intent.hasExtra("phone_number") && !isRecording) {
+            val phoneNumber = intent.getStringExtra("phone_number") ?: return START_STICKY
+            val ruleId = intent.getLongExtra("rule_id", -1L)
+            val ruleAction = intent.getStringExtra("rule_action") ?: "VOICEMAIL_ONLY"
+            val ruleName = intent.getStringExtra("rule_name") ?: "Unknown"
+            val smsTemplate = intent.getStringExtra("sms_template") ?: ""
+            val greetingId = intent.getStringExtra("greeting_id")
+
+            serviceScope.launch {
+                handleScreenedCall(phoneNumber, ruleId, ruleAction, ruleName, smsTemplate, greetingId)
+            }
+        }
+
         return START_STICKY
     }
 
@@ -105,9 +94,6 @@ class VoicemailRecorderService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        try {
-            unregisterReceiver(screenCallReceiver)
-        } catch (_: Exception) { }
         stopRecording()
     }
 
@@ -128,29 +114,41 @@ class VoicemailRecorderService : Service() {
             val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             nm.notify(NOTIFICATION_ID, notification)
 
-            // Wait for call to become active (up to 10s)
+            // Wait for call to appear in State Manager (up to 10s)
+            var callId: String? = null
             var waitTime = 0L
             while (waitTime < 10_000L) {
-                val activeCall = callStateManager.activeCalls.value.values.find {
+                callId = callStateManager.activeCalls.value.values.find {
                     it.phoneNumber.contains(phoneNumber.takeLast(10))
-                }
-                if (activeCall?.state == CallStateManager.CallState.ACTIVE) break
+                }?.id
+                if (callId != null) break
                 delay(500)
                 waitTime += 500
             }
 
-            // Auto-answer if InCallService has the call
-            val inCallService = MyInCallService.instance
-            val callId = callStateManager.activeCalls.value.values.find {
-                it.phoneNumber.contains(phoneNumber.takeLast(10))
-            }?.id
+            if (callId == null) {
+                stopSelf()
+                return
+            }
 
-            if (callId != null && inCallService != null) {
-                inCallService.answerCall(callId)
-                delay(1000) // Wait for connection
+            val inCallService = MyInCallService.instance
+            if (inCallService != null) {
+                // Securely lock the UI so ActiveCallActivity doesn't bounce in
+                inCallService.markAsAutoAnswered(callId)
                 
-                // CRITICAL ROUTING: Turn on speaker so the caller's voice comes out loud
-                // and can be recorded by the microphone.
+                // Aggressively answer the call immediately! Fixes the 10-second deadlock ring
+                inCallService.answerCall(callId)
+
+                // Wait for explicit ACTIVE state confirmation before playing audio
+                var activeWait = 0L
+                while (activeWait < 5000L) {
+                    val state = callStateManager.activeCalls.value[callId]?.state
+                    if (state == CallStateManager.CallState.ACTIVE) break
+                    delay(250)
+                    activeWait += 250
+                }
+                
+                // CRITICAL ROUTING: Turn on speaker natively so TTS routes to the cellular uplink
                 inCallService.setSpeakerphone(true)
                 delay(500)
             }

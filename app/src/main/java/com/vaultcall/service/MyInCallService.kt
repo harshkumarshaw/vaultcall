@@ -95,17 +95,8 @@ class MyInCallService : InCallService() {
                         autoAnsweredCalls.add(callId)
                         currentCall.answer(0)
 
-                        // Start the service
-                        val startIntent = Intent(this@MyInCallService, VoicemailRecorderService::class.java)
-                        try {
-                            ContextCompat.startForegroundService(this@MyInCallService, startIntent)
-                        } catch (e: Exception) {
-                            // Suppress
-                        }
-
-                        // Broadcast the call info to the service
-                        val broadcastIntent = Intent(VoicemailRecorderService.ACTION_SCREEN_CALL).apply {
-                            setPackage(packageName)
+                        // Send the full explicit payload to instantly boot and execute Voicemail
+                        val voicemailIntent = Intent(this@MyInCallService, VoicemailRecorderService::class.java).apply {
                             putExtra("phone_number", phoneNumber)
                             putExtra("rule_id", -1L)
                             putExtra("rule_action", "VOICEMAIL_ONLY")
@@ -113,7 +104,11 @@ class MyInCallService : InCallService() {
                             putExtra("sms_template", "")
                             putExtra("greeting_id", "default")
                         }
-                        sendBroadcast(broadcastIntent)
+                        try {
+                            ContextCompat.startForegroundService(this@MyInCallService, voicemailIntent)
+                        } catch (e: Exception) {
+                            // Suppress
+                        }
                     }
                 }
             }
@@ -238,6 +233,11 @@ class MyInCallService : InCallService() {
     }
 
     // ── Call Control Methods ──
+
+    /** Explicitly marks a call as automatically answered by the local voicemail engine to suppress normal Active UI dialogs */
+    fun markAsAutoAnswered(callId: String) {
+        autoAnsweredCalls.add(callId)
+    }
 
     /** Answer an incoming call. */
     fun answerCall(callId: String) {
