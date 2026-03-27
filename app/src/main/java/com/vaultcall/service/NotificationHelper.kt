@@ -28,7 +28,7 @@ class NotificationHelper @Inject constructor(
         const val CHANNEL_VOICEMAIL = "new_voicemail"
         const val CHANNEL_FOREGROUND = "screening_service"
         const val CHANNEL_MISSED = "missed_call"
-        const val CHANNEL_INCOMING = "incoming_call"
+        const val CHANNEL_INCOMING = "incoming_call_ui_v2"
 
         private const val NOTIFICATION_SCREENED_BASE = 2000
         private const val NOTIFICATION_VOICEMAIL_BASE = 3000
@@ -241,6 +241,8 @@ class NotificationHelper @Inject constructor(
             .setOngoing(true)
             .setAutoCancel(false)
             .setFullScreenIntent(fullScreenPendingIntent, true)
+            .setContentIntent(fullScreenPendingIntent) // Critical for when screen is ON and Heads-Up appears
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
 
         nm.notify(NOTIFICATION_INCOMING_CALL, notification)
