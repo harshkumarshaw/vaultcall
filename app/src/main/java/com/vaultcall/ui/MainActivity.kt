@@ -1,6 +1,7 @@
 package com.vaultcall.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -68,6 +69,9 @@ class MainActivity : FragmentActivity() {
         // Create notification channels
         notificationHelper.createChannels()
 
+        // Handle native intents if system routed an outgoing call to VaultCall
+        handleDialerIntent(intent)
+
         if (settingsRepository.currentAppLockEnabled) {
             val biometricManager = BiometricManager.from(this)
             if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL) == BiometricManager.BIOMETRIC_SUCCESS) {
@@ -77,6 +81,25 @@ class MainActivity : FragmentActivity() {
             }
         } else {
             launchApp()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleDialerIntent(intent)
+    }
+
+    private fun handleDialerIntent(intent: Intent?) {
+        if (intent?.action == Intent.ACTION_CALL || intent?.action == Intent.ACTION_DIAL) {
+            val data = intent.data
+            if (data != null && data.scheme == "tel") {
+                val number = data.schemeSpecificPart
+                if (intent.action == Intent.ACTION_CALL) {
+                    // Pipe the system outgoing call safely to TelecomManager APIs
+                    com.vaultcall.service.DefaultDialerHelper.makeCall(this, number)
+                }
+                // If it's ACTION_DIAL, it just falls through to open the Dialer UI normally
+            }
         }
     }
 

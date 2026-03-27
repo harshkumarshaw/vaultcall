@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - Current Iteration (Iteration 4)
+## [Unreleased] - Current Iteration (Iteration 5)
+
+### Fixed
+* **Intent Calling Loop Bug:** Fixed a critical bug where VaultCall swallowed its own `ACTION_CALL` intents because it was set as the Default Dialer. `MainActivity` now explicitly intercepts outgoing call intents and funnels them directly to the Telecom framework instead of infinitely re-rendering the UI.
+* **Dual-SIM Silent Hang Resolution:** On multi-SIM devices, `TelecomManager.placeCall` pauses the call to ask which SIM to use (`STATE_SELECT_PHONE_ACCOUNT`). Since VaultCall overrode the system dialer UI, there was no prompt, leaving the call hanging silently. `MyInCallService` now programmatically detects this state and instantly auto-selects the primary SIM to force the call into `STATE_DIALING`.
 
 ### Fixed
 * **Dialer Rework (ACTION_CALL Routing):** Completely deprecated `TelecomManager.placeCall` which was triggering an infinite intent loop bug and getting blocked by OEMs. Outgoing calls now route robustly via Android's native `Intent.ACTION_CALL` resolver straight into `MyInCallService`.

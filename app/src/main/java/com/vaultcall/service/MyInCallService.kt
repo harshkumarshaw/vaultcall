@@ -116,6 +116,15 @@ class MyInCallService : InCallService() {
                 super.onStateChanged(call, state)
                 callStateManager.updateCallState(callId, mapCallState(state))
 
+                // Dual-SIM auto-resolution: If the OS pauses the call to ask which SIM to use,
+                // automatically select the default one to bypass the foreground prompt hang.
+                if (state == Call.STATE_SELECT_PHONE_ACCOUNT) {
+                    val accounts = call.details.intentExtras?.getParcelableArrayList<android.telecom.PhoneAccountHandle>(android.telecom.Call.AVAILABLE_PHONE_ACCOUNTS)
+                    if (!accounts.isNullOrEmpty()) {
+                        call.phoneAccountSelected(accounts[0], false)
+                    }
+                }
+
                 when (state) {
                     Call.STATE_ACTIVE -> {
                         // If answered externally (e.g. Bluetooth), show active screen
@@ -242,6 +251,7 @@ class MyInCallService : InCallService() {
             Call.STATE_ACTIVE -> CallStateManager.CallState.ACTIVE
             Call.STATE_HOLDING -> CallStateManager.CallState.HOLDING
             Call.STATE_DISCONNECTED, Call.STATE_DISCONNECTING -> CallStateManager.CallState.DISCONNECTED
+            Call.STATE_SELECT_PHONE_ACCOUNT -> CallStateManager.CallState.DIALING
             else -> CallStateManager.CallState.RINGING
         }
     }

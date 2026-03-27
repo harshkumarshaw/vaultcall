@@ -81,19 +81,26 @@ object DefaultDialerHelper {
      * @param phoneNumber The phone number to call.
      * @param simSlot SIM slot to use (0 = default, >0 = specific slot on dual-SIM).
      */
+    @android.annotation.SuppressLint("MissingPermission")
     fun makeCall(context: Context, phoneNumber: String, simSlot: Int = 0) {
         try {
-            val intent = Intent(Intent.ACTION_CALL).apply {
-                data = Uri.parse("tel:$phoneNumber")
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                if (simSlot > 0) {
-                    putExtra("com.android.phone.extra.SLOT_ID", simSlot)
-                }
+            val telecom = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+            val uri = Uri.parse("tel:$phoneNumber")
+            val bundle = Bundle()
+            
+            // Crucial fix: Assign the default SIM to prevent immediate call disconnects / hangs on dual-SIM phones
+            val defaultAccount = telecom.getDefaultOutgoingPhoneAccount(android.telecom.PhoneAccount.SCHEME_TEL)
+            if (defaultAccount != null) {
+                bundle.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, defaultAccount)
             }
-            context.startActivity(intent)
+            // Allow explicit slot overrides if passed
+            if (simSlot > 0) {
+                bundle.putInt("com.android.phone.extra.SLOT_ID", simSlot)
+            }
+            
+            telecom.placeCall(uri, bundle)
         } catch (e: Exception) {
-            // Permission not granted or intent resolution failed.
-            // The permissions should be checked by the UI before invoking this.
+            // Permission missing or invalid phone account
         }
     }
 }
