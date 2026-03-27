@@ -208,6 +208,8 @@
     <string name="channel_foreground_desc">Shown while a call is being screened</string>
     <string name="channel_missed_name">Missed Calls</string>
     <string name="channel_missed_desc">Notifications for missed calls</string>
+    <string name="channel_incoming_name">Incoming Calls</string>
+    <string name="channel_incoming_desc">Heads-up notifications for active incoming calls</string>
 
     <!-- Wipe Confirmation -->
     <string name="wipe_dialog_title">Wipe All Data?</string>

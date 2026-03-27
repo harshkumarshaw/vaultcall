@@ -25,7 +25,8 @@ class CallStateManager @Inject constructor() {
         val contactName: String?,
         val state: CallState,
         val isIncoming: Boolean,
-        val startTime: Long
+        val startTime: Long,
+        val isEsim: Boolean? = null
     )
 
     /**

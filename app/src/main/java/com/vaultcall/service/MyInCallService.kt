@@ -32,6 +32,7 @@ class MyInCallService : InCallService() {
     @Inject lateinit var callStateManager: CallStateManager
     @Inject lateinit var callLogRepository: CallLogRepository
     @Inject lateinit var settingsRepository: SettingsRepository
+    @Inject lateinit var notificationHelper: NotificationHelper
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val calls = mutableMapOf<String, Call>()
@@ -44,6 +45,16 @@ class MyInCallService : InCallService() {
         val phoneNumber = call.details?.handle?.schemeSpecificPart ?: ""
         val isIncoming = call.details?.callDirection == Call.Details.DIRECTION_INCOMING
 
+        var isEsim: Boolean? = null
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val pm = packageManager
+            if (pm.hasSystemFeature(android.content.pm.PackageManager.FEATURE_SE_OMAPI_ESE)) {
+                isEsim = true
+            } else if (pm.hasSystemFeature(android.content.pm.PackageManager.FEATURE_SE_OMAPI_UICC)) {
+                isEsim = false
+            }
+        }
+
         calls[callId] = call
 
         val callInfo = CallStateManager.CallInfo(
@@ -52,16 +63,16 @@ class MyInCallService : InCallService() {
             contactName = null,
             state = mapCallState(call.state),
             isIncoming = isIncoming,
-            startTime = System.currentTimeMillis()
+            startTime = System.currentTimeMillis(),
+            isEsim = isEsim
         )
 
         callStateManager.addCall(callInfo)
 
         // ── Launch the appropriate call UI ──
         if (isIncoming) {
-            // Show full-screen incoming call UI (works on lock screen)
-            IncomingCallActivity.launch(
-                context = this,
+            // Show high-priority ringing notification (wakes up screen on API 10+)
+            notificationHelper.showIncomingCallNotification(
                 callId = callId,
                 phoneNumber = phoneNumber,
                 callerName = null
@@ -127,6 +138,7 @@ class MyInCallService : InCallService() {
 
                 when (state) {
                     Call.STATE_ACTIVE -> {
+                        notificationHelper.cancelNotification(NotificationHelper.NOTIFICATION_INCOMING_CALL)
                         // If answered externally (e.g. Bluetooth), show active screen
                         if (!isIncoming) return
                         ActiveCallActivity.launch(
@@ -136,7 +148,10 @@ class MyInCallService : InCallService() {
                             callerName = null
                         )
                     }
-                    Call.STATE_DISCONNECTED -> handleCallEnded(callId, callInfo, call)
+                    Call.STATE_DISCONNECTED -> {
+                        notificationHelper.cancelNotification(NotificationHelper.NOTIFICATION_INCOMING_CALL)
+                        handleCallEnded(callId, callInfo, call)
+                    }
                 }
             }
 
@@ -222,9 +237,23 @@ class MyInCallService : InCallService() {
         setMuted(muted)
     }
 
-    /** Toggle speakerphone. */
+    /** Toggle speakerphone depending on API level to adhere to Android 14 regulations. */
     fun setSpeakerphone(on: Boolean) {
-        setAudioRoute(if (on) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_EARPIECE)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            val audioManager = getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
+            if (on) {
+                val speakerDevice = audioManager.availableCommunicationDevices.firstOrNull { 
+                    it.type == android.media.AudioDeviceInfo.TYPE_BUILTIN_SPEAKER 
+                }
+                speakerDevice?.let { audioManager.setCommunicationDevice(it) }
+            } else {
+                audioManager.clearCommunicationDevice()
+            }
+        } else {
+            // Deprecated fallback for Android 11 and below
+            @Suppress("DEPRECATION")
+            setAudioRoute(if (on) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_EARPIECE)
+        }
     }
 
     /** End/hang up a call. */

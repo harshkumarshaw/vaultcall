@@ -28,10 +28,12 @@ class NotificationHelper @Inject constructor(
         const val CHANNEL_VOICEMAIL = "new_voicemail"
         const val CHANNEL_FOREGROUND = "screening_service"
         const val CHANNEL_MISSED = "missed_call"
+        const val CHANNEL_INCOMING = "incoming_call"
 
         private const val NOTIFICATION_SCREENED_BASE = 2000
         private const val NOTIFICATION_VOICEMAIL_BASE = 3000
         private const val NOTIFICATION_MISSED_BASE = 4000
+        const val NOTIFICATION_INCOMING_CALL = 5000
     }
 
     /**
@@ -40,7 +42,22 @@ class NotificationHelper @Inject constructor(
     fun createChannels() {
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val ringtoneUri = android.media.RingtoneManager.getDefaultUri(android.media.RingtoneManager.TYPE_RINGTONE)
+        val audioAttributes = android.media.AudioAttributes.Builder()
+            .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+            .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+
         val channels = listOf(
+            NotificationChannel(
+                CHANNEL_INCOMING,
+                context.getString(R.string.channel_incoming_name),
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = context.getString(R.string.channel_incoming_desc)
+                enableVibration(true)
+                setSound(ringtoneUri, audioAttributes)
+            },
             NotificationChannel(
                 CHANNEL_SCREENED,
                 context.getString(R.string.channel_screened_name),
@@ -190,5 +207,42 @@ class NotificationHelper @Inject constructor(
     fun cancelNotification(id: Int) {
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         nm.cancel(id)
+    }
+
+    /**
+     * Shows a high-priority heads-up notification for an incoming call, using a full-screen
+     * intent to wake the device and display the IncomingCallActivity when locked or backgrounded.
+     */
+    fun showIncomingCallNotification(callId: String, phoneNumber: String, callerName: String?) {
+        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val fullScreenIntent = Intent(context, com.vaultcall.ui.call.IncomingCallActivity::class.java).apply {
+            putExtra(com.vaultcall.ui.call.IncomingCallActivity.EXTRA_CALL_ID, callId)
+            putExtra(com.vaultcall.ui.call.IncomingCallActivity.EXTRA_PHONE_NUMBER, phoneNumber)
+            putExtra(com.vaultcall.ui.call.IncomingCallActivity.EXTRA_CALLER_NAME, callerName)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION
+        }
+
+        val fullScreenPendingIntent = PendingIntent.getActivity(
+            context,
+            callId.hashCode(),
+            fullScreenIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val callerDisplay = callerName ?: phoneNumber
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_INCOMING)
+            .setSmallIcon(android.R.drawable.ic_menu_call)
+            .setContentTitle("Incoming call")
+            .setContentText(callerDisplay)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_CALL)
+            .setOngoing(true)
+            .setAutoCancel(false)
+            .setFullScreenIntent(fullScreenPendingIntent, true)
+            .build()
+
+        nm.notify(NOTIFICATION_INCOMING_CALL, notification)
     }
 }

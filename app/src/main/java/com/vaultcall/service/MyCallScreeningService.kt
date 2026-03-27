@@ -32,6 +32,21 @@ class MyCallScreeningService : CallScreeningService() {
         }
 
         try {
+            // ── STIR/SHAKEN Carrier Verification (Android 11+) ──
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                if (callDetails.callerNumberVerificationStatus == android.telecom.Connection.VERIFICATION_STATUS_FAILED) {
+                    val response = CallResponse.Builder()
+                        .setRejectCall(true)
+                        .setDisallowCall(true)
+                        .setSkipCallLog(false)
+                        .setSkipNotification(true)
+                        .build()
+
+                    respondToCall(callDetails, response)
+                    return
+                }
+            }
+
             // Run rules engine synchronously (CallScreeningService runs on binder thread)
             val matchedRule = rulesEngine.evaluateSync(phoneNumber)
 
