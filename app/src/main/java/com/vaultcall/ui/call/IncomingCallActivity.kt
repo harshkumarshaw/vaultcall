@@ -117,9 +117,10 @@ class IncomingCallActivity : ComponentActivity() {
                 val activeCalls by callStateManager.activeCalls.collectAsState()
                 val currentCall = activeCalls[callId]
 
-                // Automatically close if caller hangs up (missed call)
+                // Automatically close if caller hangs up (missed call) OR if call goes ACTIVE
                 LaunchedEffect(currentCall?.state) {
-                    if (currentCall == null || currentCall.state == CallStateManager.CallState.DISCONNECTED) {
+                    val state = currentCall?.state
+                    if (state == null || state == CallStateManager.CallState.DISCONNECTED || state == CallStateManager.CallState.ACTIVE) {
                         finish()
                     }
                 }

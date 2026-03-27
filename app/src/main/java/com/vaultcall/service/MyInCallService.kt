@@ -38,6 +38,9 @@ class MyInCallService : InCallService() {
     private val calls = mutableMapOf<String, Call>()
     private val callCallbacks = mutableMapOf<String, Call.Callback>()
 
+    // Tracks calls answered automatically by the Voicemail system to suppress foreground UI
+    private val autoAnsweredCalls = mutableSetOf<String>()
+
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
 
@@ -89,6 +92,7 @@ class MyInCallService : InCallService() {
                     val currentCall = calls[callId]
                     // If still ringing after timeout, auto-answer for Voicemail
                     if (currentCall != null && currentCall.state == Call.STATE_RINGING) {
+                        autoAnsweredCalls.add(callId)
                         currentCall.answer(0)
 
                         // Start the service
@@ -133,8 +137,15 @@ class MyInCallService : InCallService() {
                 when (state) {
                     Call.STATE_ACTIVE -> {
                         notificationHelper.cancelNotification(NotificationHelper.NOTIFICATION_INCOMING_CALL)
-                        // If answered externally (e.g. Bluetooth), show active screen
                         if (!isIncoming) return
+
+                        // If the call was auto-answered for voicemail, DO NOT launch the ActiveCall UI
+                        if (autoAnsweredCalls.contains(callId)) {
+                            autoAnsweredCalls.remove(callId)
+                            return
+                        }
+
+                        // If answered externally (e.g. Bluetooth) or by user, show active screen
                         ActiveCallActivity.launch(
                             context = this@MyInCallService,
                             callId = callId,
@@ -192,6 +203,7 @@ class MyInCallService : InCallService() {
         callCallbacks[callId]?.let { call.unregisterCallback(it) }
         callCallbacks.remove(callId)
         calls.remove(callId)
+        autoAnsweredCalls.remove(callId)
 
         callStateManager.removeCall(callId)
     }
