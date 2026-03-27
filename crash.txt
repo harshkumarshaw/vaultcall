@@ -1,0 +1,259 @@
+--------- beginning of crash
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: FATAL EXCEPTION: Firebase Background Thread #0
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: Process: com.dylan.dalle3.pro, PID: 6463
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: java.lang.IllegalStateException: SharedPreferences in credential encrypted storage are not available until after user (id 0) is unlocked
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:665)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:632)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at android.content.ContextWrapper.getSharedPreferences(ContextWrapper.java:232)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at D3.h.get(Unknown Source:20)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at J3.q.get(Unknown Source:13)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at A.c.run(Unknown Source:926)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at A.c.run(Unknown Source:535)
+03-27 07:51:35.807  6463  6488 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1564)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: Process: com.dylan.dalle3.pro, PID: 6463
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: java.lang.RuntimeException: Unable to create application top.xjunz.tasker.App: java.lang.IllegalStateException: SharedPreferences in credential encrypted storage are not available until after user (id 0) is unlocked
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:8756)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(Unknown Source:0)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2873)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: Caused by: java.lang.IllegalStateException: SharedPreferences in credential encrypted storage are not available until after user (id 0) is unlocked
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:665)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:632)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.content.ContextWrapper.getSharedPreferences(ContextWrapper.java:232)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at p4.h.c(Unknown Source:43)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at top.xjunz.tasker.App.onCreate(Unknown Source:147)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1384)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:8750)
+03-27 07:51:35.807  6463  6463 E AndroidRuntime: 	... 9 more
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: Process: com.vaultcall, PID: 20770
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@58a7828 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{8e717c1 20770:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{8e717c1 20770:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	... 9 more
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.android.server.am.ActiveServices.validateForegroundServiceType(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:126)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundInnerLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:120)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:51)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.setServiceForeground(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:13)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 	at android.app.IActivityManager$Stub.onTransact$setServiceForeground$(IActivityManager.java:12817)
+03-27 13:22:57.291 20770 20770 E AndroidRuntime: 
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: Process: com.vaultcall, PID: 22475
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@db33e42 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{8554691 22475:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{8554691 22475:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:22:57.862 22475 22475 E AndroidRuntime: 	... 9 more
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: Process: com.vaultcall, PID: 23139
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@fff2fe8 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{417ea27 23139:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{417ea27 23139:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	... 9 more
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.android.server.am.ActiveServices.validateForegroundServiceType(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:126)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundInnerLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:120)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:51)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.setServiceForeground(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:13)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 	at android.app.IActivityManager$Stub.onTransact$setServiceForeground$(IActivityManager.java:12817)
+03-27 13:23:15.766 23139 23139 E AndroidRuntime: 
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: Process: com.vaultcall, PID: 23164
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@c2f9b89 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{f7d6080 23164:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{f7d6080 23164:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	... 9 more
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.android.server.am.ActiveServices.validateForegroundServiceType(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:126)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundInnerLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:120)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:51)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.setServiceForeground(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:13)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 	at android.app.IActivityManager$Stub.onTransact$setServiceForeground$(IActivityManager.java:12817)
+03-27 13:23:32.122 23164 23164 E AndroidRuntime: 
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: Process: com.vaultcall, PID: 24057
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@d64c685 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{57c67f4 24057:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{57c67f4 24057:com.vaultcall/u0a596} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	... 9 more
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.android.server.am.ActiveServices.validateForegroundServiceType(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:126)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundInnerLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:120)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:51)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.setServiceForeground(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:13)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 	at android.app.IActivityManager$Stub.onTransact$setServiceForeground$(IActivityManager.java:12817)
+03-27 13:23:40.928 24057 24057 E AndroidRuntime: 
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: Process: com.vaultcall, PID: 24402
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@d64c685 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: android.app.ForegroundServiceStartNotAllowedException: Service.startForeground() not allowed due to mAllowStartForeground false: service com.vaultcall/.service.VoicemailRecorderService
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: Caused by: android.app.ForegroundServiceStartNotAllowedException: Service.startForeground() not allowed due to mAllowStartForeground false: service com.vaultcall/.service.VoicemailRecorderService
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ForegroundServiceStartNotAllowedException$1.createFromParcel(ForegroundServiceStartNotAllowedException.java:54)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ForegroundServiceStartNotAllowedException$1.createFromParcel(ForegroundServiceStartNotAllowedException.java:50)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Parcel.readParcelableInternal(Parcel.java:5229)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Parcel.readParcelable(Parcel.java:5211)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3349)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:23:47.930 24402 24402 E AndroidRuntime: 	... 9 more
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: Process: com.vaultcall, PID: 26529
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@c0ab219 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{c59a949 26529:com.vaultcall/u0a597} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{c59a949 26529:com.vaultcall/u0a597} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	... 9 more
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.android.server.am.ActiveServices.validateForegroundServiceType(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:126)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundInnerLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:120)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.android.server.am.ActiveServices.setServiceForegroundLocked(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:51)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.setServiceForeground(qb/106573400 7cb0851493de970b4a9068b15464f122848b84c259e5cb9a99e61d42179a4424:13)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 	at android.app.IActivityManager$Stub.onTransact$setServiceForeground$(IActivityManager.java:12817)
+03-27 13:25:23.268 26529 26529 E AndroidRuntime: 
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: FATAL EXCEPTION: main
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: Process: com.vaultcall, PID: 27836
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: java.lang.RuntimeException: Unable to start service com.vaultcall.service.VoicemailRecorderService@db33e42 with Intent { xflg=0x4 cmp=com.vaultcall/.service.VoicemailRecorderService (has extras) }: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{116b191 27836:com.vaultcall/u0a597} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6105)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleServiceArgs(Unknown Source:0)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2974)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:273)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:363)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10060)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:632)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:975)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: Caused by: java.lang.SecurityException: Starting FGS with type microphone callerApp=ProcessRecord{116b191 27836:com.vaultcall/u0a597} targetSDK=34 requires permissions: all of the permissions allOf=true [android.permission.FOREGROUND_SERVICE_MICROPHONE] any of the permissions allOf=false [android.permission.CAPTURE_AUDIO_HOTWORD, android.permission.CAPTURE_AUDIO_OUTPUT, android.permission.CAPTURE_MEDIA_OUTPUT, android.permission.CAPTURE_TUNER_AUDIO_INPUT, android.permission.CAPTURE_VOICE_COMMUNICATION_OUTPUT, android.permission.RECORD_AUDIO]  and the app must be in the eligible state/exemptions to access the foreground only permission
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3354)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3338)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3321)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3263)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.IActivityManager$Stub$Proxy.setServiceForeground(IActivityManager.java:7539)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.Service.startForeground(Service.java:776)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at com.vaultcall.service.VoicemailRecorderService.onStartCommand(VoicemailRecorderService.kt:75)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:6087)
+03-27 13:25:23.764 27836 27836 E AndroidRuntime: 	... 9 more
